@@ -9,6 +9,9 @@ public class App {
     public static void main(String[] args) throws Exception {
         loadEnv(".env");
 
+        String portEnv = System.getenv("PORT");
+        if (portEnv != null) port(Integer.parseInt(portEnv));
+
         ShortenerService service = new ShortenerService();
 
         // Serve static files (HTML/CSS) from src/main/resources/public
@@ -41,7 +44,9 @@ public class App {
     }
 
     private static void loadEnv(String path) throws Exception {
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+        java.io.File f = new java.io.File(path);
+        if (!f.exists()) return;
+        try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
