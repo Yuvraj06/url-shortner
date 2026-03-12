@@ -8,9 +8,15 @@ public class ShortenerService {
     private final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
      public String shortenURL(String longUrl) {
-        String shortCode = generateCode();
-        urlDao.saveUrl(longUrl, shortCode);
-        return shortCode;
+        int maxRetries = 5;
+        for (int i = 0; i < maxRetries; i++) {
+            String shortCode = generateCode();
+            if (urlDao.getLongUrl(shortCode) == null) {
+                urlDao.saveUrl(longUrl, shortCode);
+                return shortCode;
+            }
+        }
+        throw new RuntimeException("Could not generate a unique short code after " + maxRetries + " attempts");
     }
 
     // Method to generate a random 6-character code

@@ -1,4 +1,5 @@
-App.class
+com\shortener\dao\DBInspect.class
 com\shortener\dao\URLDao.class
 com\shortener\service\ShortenerService.class
+com\shortener\App.class
 com\shortener\dao\DBConnections.class

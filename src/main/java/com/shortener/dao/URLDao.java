@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class URLDao {
     public void saveUrl(String longUrl, String shortCode) {
-    String query = "INSERT INTO short_urls (long_url, short_code) VALUES (?, ?)";
+    String query = "INSERT INTO short_urls (full_url, short_code) VALUES (?, ?)";
 
     try (Connection conn = DBConnections.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -30,7 +30,7 @@ public class URLDao {
 }
 
     public String getLongUrl(String shortCode) {
-    String query = "SELECT long_url FROM urls WHERE short_code = ?";
+    String query = "SELECT full_url FROM short_urls WHERE short_code = ?";
     
     try (Connection conn = DBConnections.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -39,7 +39,7 @@ public class URLDao {
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {
-            return rs.getString("long_url");
+            return rs.getString("full_url");
         }
     } catch (SQLException e) {
         e.printStackTrace();
