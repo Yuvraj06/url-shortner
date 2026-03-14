@@ -21,7 +21,7 @@ public class App {
         post("/shorten", (req, res) -> {
             String longUrl = req.queryParams("url");
             String shortCode = service.shortenURL(longUrl);
-            return "Your short URL is: http://localhost:4567/" + shortCode;
+            return "Your short URL is: https://ym.up.railway.app/" + shortCode;
         });
 
         // Route to handle REDIRECTION
